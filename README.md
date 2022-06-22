@@ -1,2 +1,3 @@
 # nl4opt-subtask2-baseline
-Baseline code for NL4Opt competition subtask 2.
+
+The baseline code the subtask #2 of the NL4Opt competition.

@@ -1,0 +1,22 @@
+<s>
+<DECLARATION>
+<OBJ_DIR> maximize </OBJ_DIR>
+<OBJ_NAME> number of coconuts </OBJ_NAME> [is] 
+<VAR> rickshaws </VAR> [TIMES] <PARAM> 50 </PARAM>
+<VAR> ox carts </VAR> [TIMES] <PARAM> 30 </PARAM>
+</DECLARATION>
+<DECLARATION>
+<CONST_DIR> at most </CONST_DIR>
+<OPERATOR> LESS_OR_EQUAL </OPERATOR>
+<LIMIT> 200 </LIMIT>
+<CONST_TYPE> [LINEAR_CONSTRAINT] </CONST_TYPE> [is] 
+<VAR> rickshaws </VAR> [TIMES] <PARAM> 10 </PARAM>
+<VAR> ox carts </VAR> [TIMES] <PARAM> 8 </PARAM>
+</DECLARATION>
+<DECLARATION>
+<CONST_DIR> must not exceed </CONST_DIR>
+<OPERATOR> LESS_OR_EQUAL </OPERATOR>
+<CONST_TYPE> [XY_CONSTRAINT] </CONST_TYPE>
+<VAR> ox carts </VAR> [is] <VAR> rickshaws </VAR>
+</DECLARATION>
+</s>
