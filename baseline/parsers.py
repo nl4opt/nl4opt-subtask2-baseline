@@ -10,6 +10,7 @@ from typing import Optional, Dict, List
 import logging
 from bs4 import BeautifulSoup
 import lxml
+import pdb
 
 # dataclass that stores each term in a declaration
 @dataclass
@@ -72,11 +73,13 @@ def convert_to_canonical(formulation: ProblemFormulation) -> CanonicalFormulatio
         objective[v.index] = v.value if v.value is not None else np.nan
 
     for constraint in formulation.constraints:
+
         row = np.ones(len(formulation.entities) + 1)
         # compute everything as <= at first
         if constraint.type == const.SUM_CONSTRAINT:
             # x + y <= 150
             row[-1] = constraint.limit
+
         elif constraint.type == const.LOWER_BOUND or constraint.type == const.UPPER_BOUND:
             # x <= 50
             # compute as upper bound and flip later for lower bound if necessary

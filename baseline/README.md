@@ -184,7 +184,7 @@ Here is an example of a data sample for subtask 2:
 The subfolder `./configs` should contain the configuration file for setting up the model configuration and the training hyperparameters. The configuration file `baseline.json` corresponds to the baseline model for subtask 2. To run the training with our configuration:
 
 ```
-python train.py --config configs/default.json
+python train.py --config configs/baseline.json
 ```
 
 The important parameters here are `use_copy`, `per_declaration`,  and `use_prompt`. 
