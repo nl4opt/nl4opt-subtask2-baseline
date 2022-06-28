@@ -140,10 +140,11 @@ class Parser:
         multiplier = 1
         x_out = 0
 
-        x_sub = re.sub('(percent)|%|¢', '', x)
         # convert percent, cents to fractional
+        x_sub = re.sub('(percent)|%|¢', '', x)
         if x_sub != x:
             multiplier = 1 / 100
+            x = x_sub
         try:
             x_out = float(x) * multiplier
         except ValueError:
