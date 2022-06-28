@@ -83,6 +83,7 @@ class LPMappingDataset(Dataset):
         data = []
         for doc_id, content in self.data.items():  # TODO verify: is this a list or dict?
             document = content['document']
+            order_mapping = content.get('order_mapping', None)
 
             input_ids = tokenizer([document], max_length=self.max_length, truncation=True)['input_ids'][0]
 
@@ -102,7 +103,8 @@ class LPMappingDataset(Dataset):
                 attention_mask=attn_mask,
                 decoder_input_chunks=decoder_input_chunks,
                 input_tokens=input_tokens,
-                document=document
+                document=document,
+                order_mapping=order_mapping
             )
             data.append(instance)
         self.data = data

@@ -21,9 +21,18 @@ TYPE_DICT = {
 
 # word to number mappings in ground truth
 NUMS_DICT = {
+    'a half': 1 / 2,
     'half': 1 / 2,
+    'one half': 1 / 2,
     'one third': 1 / 3,
+    'third': 1 / 3,
+    'a third': 1 / 3,
+    'one fourth': 1 / 4,
+    'fourth': 1 / 4,
+    'a fourth': 1 / 4,
+    'one fifth': 1 / 5,
+    'fifth': 1 / 5,
+    'a fifth': 1 / 5,
     'twice': 2,
-    'third': 3,
     'thrice': 3
 }

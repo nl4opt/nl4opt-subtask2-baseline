@@ -102,12 +102,11 @@ def convert_to_canonical(formulation: ProblemFormulation) -> CanonicalFormulatio
         elif constraint.type == const.BALANCE_CONSTRAINT_1:
             # x <= 3y
             row *= 0
+            # y should be first term, but we will parse whichever term that has value as y
             for i, (k, v) in enumerate(constraint.terms.items()):
-                # y is first term, x is second term
-                if i == 0:
-                    # check if value was given in formulation
-                    row[v.index] = - v.value if v.value is not None else np.nan
-                elif i == 1:
+                if v.value is not None:
+                    row[v.index] = - v.value
+                else:
                     row[v.index] = 1
         elif constraint.type == const.BALANCE_CONSTRAINT_2:
             # x <= y
@@ -135,20 +134,24 @@ class Parser:
         :param x: any number-like string
         :return: best-effort attempt at converting the string to a number; returns 0 if it could not parse
         """
-        x = x.strip().replace(',', '')
+        x = x.strip().replace(',', '').strip(';,$')
+        # remove extra periods from the end
+        x = re.sub('\.+$', '', x)
         multiplier = 1
         x_out = 0
+
+        # convert percent, cents to fractional
+        x_sub = re.sub('(percent)|%|¢', '', x)
+        if x_sub != x:
+            multiplier = 1 / 100
+            x = x_sub
         try:
-            # convert percent, cents to fractional
-            if re.search('(percent)|%|¢', x):
-                x = re.sub('[^0-9.]', '', x)
-                multiplier = 1 / 100
             x_out = float(x) * multiplier
         except ValueError:
             # see if there are any digits and strip everything else out
             if re.search('[\d.]+', x):
                 res = re.sub('[^0-9.]', '', x)
-                x_out = float(res)
+                x_out = float(res) * multiplier
                 if self.print_errors:
                     logging.info(
                         f'Non-numeric input \"{x}\" converted to \"{x_out}\" by filtering out non-number characters')
@@ -156,9 +159,9 @@ class Parser:
                 try:
                     # see if it is in predefined constants
                     if x in const.NUMS_DICT:
-                        x_out = const.NUMS_DICT[x]
+                        x_out = const.NUMS_DICT[x] * multiplier
                     else:
-                        x_out = float(w2n.word_to_num(x))
+                        x_out = float(w2n.word_to_num(x)) * multiplier
                         if self.print_errors:
                             logging.info(f'Non-numeric input \"{x}\" converted to {x_out} with w2n')
                 except ValueError:
