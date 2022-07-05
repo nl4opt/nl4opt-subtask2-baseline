@@ -66,15 +66,16 @@ class CanonicalFormulation:
 
 
 def convert_to_canonical(formulation: ProblemFormulation) -> CanonicalFormulation:
+    n_entities = max(formulation.entities.values()) + 1 if len(formulation.entities) else 0
     constraints = []
-    objective = np.zeros(len(formulation.entities))
+    objective = np.zeros(n_entities)
     for k, v in formulation.objective.terms.items():
         # check if value was given in formulation
         objective[v.index] = v.value if v.value is not None else np.nan
 
     for constraint in formulation.constraints:
 
-        row = np.ones(len(formulation.entities) + 1)
+        row = np.ones(n_entities + 1)
         # compute everything as <= at first
         if constraint.type == const.SUM_CONSTRAINT:
             # x + y <= 150
