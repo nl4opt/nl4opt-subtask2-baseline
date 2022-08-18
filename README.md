@@ -202,7 +202,7 @@ python test.py --gpu <gpu id> --checkpoint <checkpoint.mdl> --test-file <test.js
 ```
 More details about scoring can be found in the `notebooks` folder [here](/notebooks/demo.ipynb). For reference, our baseline model achieves a per-declaration accuracy of `Acc = 0.60` on the test set. Note however that the test set is held out and will not be shared to participants.
 
-At testing time, the model is given everything in the data dictionary **except** the `"obj_declaration"` and `"const_declarations"` dictionaries. 
+At testing time, the model is allowed to use as input everything in the data dictionary **except** the `"obj_declaration"` and `"const_declarations"` dictionaries. 
 
 # Extending and Modifying the Code
 You are permitted to modify the model code and training code. However, you are not permitted to modify the file `scoring.py`, which is used to evaluate and score models using the shared canonical format. In the testing code, you are allowed to modify the data loaders and parsers if you choose a different model output format than what the baseline uses. Precisely, the file `parsers.py` is for parsing model outputs into the canonical form. If you need to make a custom parser for your own model outputs, you can use your own classes or extend `parsers.py`. Make sure that your parser uses the `order_mapping` dictionary to correctly map outputs to their respective columns in the canonical output. 
@@ -210,7 +210,7 @@ You are permitted to modify the model code and training code. However, you are n
 You will also need to submit the conda environment file that you use so we can run your code. If you are extending the baseline code and need other Python libraries or different versions, please update the `environment.yml` by exporting your environment with `conda env export > environment.yml`.
 
 # Submission Guidelines
-We expect that your model prediction will be converted to a `CanonicalForm` object in the evaluation loop. Take a look at `test.py` to see how we score our model, and modify the code so that your model can be used. As mentioned in the Testing section: at testing time, the model is given everything in the data dictionary **except** the `"obj_declaration"` and `"const_declarations"` dictionaries. 
+We expect that your model prediction will be converted to a `CanonicalForm` object in the evaluation loop. Take a look at `test.py` to see how we score our model, and modify the code so that your model can be used. As mentioned in the Testing section: at testing time, the model is allowed to have as input everything in the data dictionary **except** the `"obj_declaration"` and `"const_declarations"` dictionaries. 
 
 Each participating team is required to include the following in their submission folder.
 
