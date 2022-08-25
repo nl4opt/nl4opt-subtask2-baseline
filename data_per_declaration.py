@@ -1,4 +1,4 @@
-from constants import SPECIAL_TOKENS
+from constants import *
 from collections import namedtuple
 from utils import generate_decoder_inputs_outputs
 import json
@@ -24,12 +24,17 @@ class DeclarationMappingDataset(LPMappingDataset):
             orig_input_ids = tokenizer([document], max_length=self.max_length, truncation=True)['input_ids'][0]
 
             decoder_input_chunks = self.create_decoder_input_chunks(content, tokenizer)
+            const_triggers = [START_OF_CONST_DIR + " " + x['text'].strip(" ") + " " + END_OF_CONST_DIR for x in content['spans'] if x['label'] == 'CONST_DIR' and 'text' in x]
+            obj_triggers = [START_OF_OBJ_DIR + " " + x['text'].strip(" ") + " " + END_OF_OBJ_DIR for x in content['spans'] if x['label'] == 'OBJ_DIR' and 'text' in x]
+
+            triggers = [tokenizer.encode(x)[1:-1] for x in obj_triggers + const_triggers]
+
             # print("decoder_input_chunks", decoder_input_chunks)
 
-            for decoder_input in decoder_input_chunks:
+            for decoder_input, trigger in zip(decoder_input_chunks, triggers):
 
                 # Declaration prompt trigger
-                decl_trigger = decoder_input[0]
+                decl_trigger = trigger
                 # TODO: wrap the trigger in <s>TRIGGER</s>
                 # decl_trigger = [tokenizer.bos_token_id] + decoder_input[0] + [tokenizer.eos_token_id]
                 pad_num = self.max_length - len(decl_trigger) - len(orig_input_ids)
