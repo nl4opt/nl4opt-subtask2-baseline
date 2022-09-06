@@ -13,7 +13,7 @@ Verify that it was installed:
 conda env list
 ```
 
-Next, copy the dataset files `train.jsonl` and `dev.jsonl` to the `data` if they are not already there.
+Next, copy the dataset files `train.jsonl` and `dev.jsonl` to the `data`. You can get the dataset files under [generation_task](https://github.com/nl4opt/nl4opt-competition).
 # Dataset
 Our dataset consists of many JSON records. The records contain these (and more) properties:
 - `document` is the original document
