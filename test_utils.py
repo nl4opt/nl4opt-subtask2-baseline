@@ -103,7 +103,7 @@ def evaluate(tokenizer,
         pred_txt, gold_txt = pred_txt[3:-4], gold_txt[3:-4]
         pred_texts.append(pred_txt)
         gold_texts.append(gold_txt)
-        diff_metrics = metric.get_scores(pred_txt, gold_txt)
+        diff_metrics = {}
         measures.extend(diff_metrics)
 
         gold_pred_pairs.append({
@@ -114,7 +114,7 @@ def evaluate(tokenizer,
         })
     progress.close()
     accuracy = collate_score_declarations(pred_texts, gold_texts,doc_ids,order_mappings, print_errors)
-    avg_metric = metric.get_scores(pred_texts, gold_texts, avg=True)
+    avg_metric = {}
 
     result = {
         'accuracy': accuracy,
